@@ -3,6 +3,12 @@ import cv2
 import tqdm
 import numpy as np
 import pickle as pkl
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-s", "--scale", type=float, default=2.0)
+args = parser.parse_args()
+scale = args.scale
 
 img_list = os.listdir("datasets/T91")
 
@@ -11,11 +17,9 @@ subimages_lr = []
 
 for filename in tqdm.tqdm(img_list):
     if filename.endswith(".png"):
-        img = cv2.imread(f"datasets/T91/{filename}")#.astype(float)
+        img = cv2.imread(f"datasets/T91/{filename}")
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        # cv2.imshow("img", img)
-        # cv2.waitKey(100)
-        img_lr = cv2.resize(img, (img.shape[1]//4,img.shape[0]//4),interpolation=cv2.INTER_CUBIC)
+        img_lr = cv2.resize(img, (int(img.shape[1]/scale),int(img.shape[0]/scale)),interpolation=cv2.INTER_CUBIC)
         img_lr = cv2.resize(img_lr, (img.shape[1],img.shape[0]),interpolation=cv2.INTER_CUBIC)
         img = img.astype(float)/255.
         img_lr = img_lr.astype(float)/255.

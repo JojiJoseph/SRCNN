@@ -25,7 +25,7 @@ best_avg_psnr = 0
 model = SRCNN().to(device)
 opt = torch.optim.Adam(model.parameters(),1e-4)
 loss_fn = torch.nn.MSELoss()
-for epoch in range(10):
+for epoch in range(50):
     print("epoch", epoch)
     for i in tqdm(range(len(dataset_hr)//100)):
         indices = np.random.randint(0, len(dataset_hr),(100,))
